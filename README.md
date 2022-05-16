@@ -1,0 +1,2 @@
+# MaybBoustrophedonCellularDecomposition
+Python cell decomposition algorithm
