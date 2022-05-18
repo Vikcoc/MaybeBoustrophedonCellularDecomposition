@@ -104,10 +104,10 @@ class CellAlgorithm:
             destroy_event = next((e for e in self.DestroyEventsOrdered if cell_end[0] == e.PointOnTop
                                   or cell_end[1] == e.PointOnBottom), None)
             if destroy_event is not None:
-                return
+                return first_cell
 
             if first_cell.TopRight == self.SearchSpace.TopRight and first_cell.BotRight == self.SearchSpace.BotRight:
-                return
+                return first_cell
 
             combine_event_top = next((e for e in self.CombineEventsOrdered if cell_end[0] == e.PointOnBottom), None)
             combine_event_bot = next((e for e in self.CombineEventsOrdered if cell_end[1] == e.PointOnTop), None)
@@ -151,6 +151,7 @@ class CellAlgorithm:
                                                     splits[-1].PointOnBottom.NextPoint,
                                                     first_cell.MaxBotRight))
         self.CellQueue.extend(first_cell.Children)
+        return first_cell
 
     # def complete_first_cell_and_start_new(self):
     # @staticmethod
