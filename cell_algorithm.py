@@ -128,15 +128,25 @@ class CellAlgorithm:
             if (combine_event_top is None or combine_event_top.CellOnTop is not None
                     and combine_event_top.CellOnTop.TopCombineEvent is None) and \
                 (combine_event_bot is None or combine_event_bot.CellOnBottom is not None
-                    and combine_event_bot.CellOnBot.BotCombineEvent is None):
+                    and combine_event_bot.CellOnBottom.BotCombineEvent is None):
                 first_cell.Children.append(
                     SolutionCell(first_cell.TopRight if combine_event_top is None
                                  else combine_event_top.CellOnTop.TopRight,
+
                                  first_cell.BotRight if combine_event_bot is None
                                  else combine_event_bot.CellOnBottom.BotRight,
-                                 first_cell.MaxTopRight if combine_event_top is None
+
+                                 #  if it is not in a combine event, the max can also be the end of the cell
+                                 (first_cell.MaxTopRight
+                                  if first_cell.MaxTopRight is not first_cell.TopRight
+                                  else first_cell.MaxTopRight.NextPoint)
+                                 if combine_event_top is None
                                  else combine_event_top.CellOnTop.MaxTopRight,
-                                 first_cell.MaxBotRight if combine_event_bot is None
+
+                                 (first_cell.MaxBotRight
+                                  if first_cell.MaxBotRight is not first_cell.BotRight
+                                  else first_cell.MaxBotRight.PrevPoint)
+                                 if combine_event_bot is None
                                  else combine_event_bot.CellOnBottom.MaxBotRight))
         else:
             self.make_cell_end(first_cell, splits[0].X)
