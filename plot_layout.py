@@ -3,8 +3,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 class Map:
-    freq = 0.25
-
+    freq = 0.12
+    colors = ['b','g','c','y']
+    index = 0;
     @staticmethod
     def __init__(corner1, corner2):
         plt.figure(figsize=(13, 7))
@@ -72,8 +73,10 @@ class Map:
                 y2 = points[1][1] + ((x - points[1][0])*(points[3][1] - points[1][1]))/(points[3][0] - points[1][0])
                 plt.plot([x, x],
                         [y1, y2],
-                        color = "Green", linestyle = "dashed")
-            Map.freq = Map.freq*3/4 
+                        #color = "Green", linestyle = "dashed")
+                        color = Map.colors[Map.index%len(Map.colors)], linestyle = "dashed")
+            #Map.freq = Map.freq*3/4
+            Map.index+=1
             #plt.draw()
             plt.pause(1)
 
