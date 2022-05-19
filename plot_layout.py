@@ -4,14 +4,14 @@ import numpy as np
 
 class Map:
     freq = 0.25
-    obstacles = []
 
     @staticmethod
-    def __init__():
+    def __init__(corner1, corner2):
         plt.figure(figsize=(13, 7))
-        #ax = fig.add_subplot(111)
-        x = np.arange(-5, 6, 0.5)
-        y = np.arange(-10, 11, 1)
+        x_tick = 0.5
+        y_tick = 1
+        x = np.arange(corner1[0], corner2[0]+x_tick, x_tick)
+        y = np.arange(corner1[1], corner2[1]+y_tick, y_tick)
         plt.xticks(x)
         plt.yticks(y)
         
@@ -27,11 +27,12 @@ class Map:
                   [corners[2][1], corners[0][1]]], color = "Black")
         
     @staticmethod
-    def MapPoints(points):
-        Map.obstacles = points.copy()
-        for i in range(len(points)):
-            plt.plot([points[i][0], points[(i+1)%len(points)][0]], [points[i][1], points[(i+1)%len(points)][1]], color = "Red")
+    def MapPoints(obstacles):
         plt.pause(1)
+        for points in obstacles:
+            for i in range(len(points)):
+                plt.plot([points[i][0], points[(i+1)%len(points)][0]], [points[i][1], points[(i+1)%len(points)][1]], color = "Red")
+            plt.pause(1)
 
     @staticmethod
     def PlotCells(points):
@@ -48,9 +49,6 @@ class Map:
             plt.plot([x, x],
                     [y1, y2],
                     color = "Green", linestyle = "dashed")
-            # plt.plot([x, x],
-            #          [points[2][1], points[3][1]],
-            #            color = "Green", linestyle = "dashed")
         Map.freq = Map.freq*3/4 
     
     @staticmethod
@@ -75,9 +73,6 @@ class Map:
                 plt.plot([x, x],
                         [y1, y2],
                         color = "Green", linestyle = "dashed")
-                # plt.plot([x, x],
-                #          [points[2][1], points[3][1]],
-                #            color = "Green", linestyle = "dashed")
             Map.freq = Map.freq*3/4 
             #plt.draw()
             plt.pause(1)
